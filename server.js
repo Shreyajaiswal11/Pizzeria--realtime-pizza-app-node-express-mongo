@@ -9,6 +9,9 @@ const Port=process.env.Port || 5000
 app.get("/",(req,res) =>{
     res.render("home")
 }) 
+// Assets
+app.use(express.static('public'))
+
 //set the template engine
 app.use(expressLayout)
 app.set('views',Path.join(__dirname,'/resources/views'))
