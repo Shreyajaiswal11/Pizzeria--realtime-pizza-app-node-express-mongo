@@ -1,4 +1,7 @@
  @import'./variables';
+ @import '~noty/src/noty.scss';
+ @import '~noty/src/themes/mint.scss';
+
  body{
      font-family: 'Lato',sans-serif;
      -webkit-font-smoothing:antialiased;
@@ -25,12 +28,15 @@
   .add-to-cart{
       border:2px solid $primary;
       color:$primary;
+      transition: $smooth;
       &:hover{
           background-color: $primary;
           color: $pure;
           border-color: $pure;
       }
-      transition: $smooth;
+      &:focus{
+          outline:none;
+      }
   }
   .btn-primary{
       background: $primary;
@@ -56,3 +62,7 @@ section.login{
     }
 }
 
+.noty_theme__mint{
+    border-radius:50px!important;
+    padding-left: 8px !important;
+}
