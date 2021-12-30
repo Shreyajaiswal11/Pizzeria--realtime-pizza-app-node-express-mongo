@@ -10,6 +10,7 @@ const flash=require('express-flash')
 const MongoDbStore=require('connect-mongo')
 const session =require('express-session')
 const passport =require('passport')
+const Emitter=require('events')
 
 // //database connection
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/pizza';
@@ -25,6 +26,10 @@ db.on("error", console.error.bind(console,"connection error:"));
 db.once("open",()=> {
     console.log("Database connected");
 });
+const eventEmitter =new Emitter()
+app.set('eventEmitter',eventEmitter)
+//event emitter
+
 
 // session config
 app.use(session({
@@ -65,9 +70,26 @@ app.use(expressLayout)
 app.set('views',Path.join(__dirname,'/resources/views'))
 app.set('view engine','ejs')
 
-app.listen(Port, () =>{
+const server=app.listen(Port, () =>{
     console.log(`listinning to port ${Port}`)
 })
 require('./routes/web')(app)
+
+// Socket
+const io= require('socket.io')(server)
+io.on('connection',(socket) =>{
+    //join
+
+ socket.on('join',(orderId) =>{
+     socket.join(orderId)
+ })
+})
+eventEmitter.on('orderUpdated', (data)=>{
+io.to(`order_${data.id}`).emit('orderUpdated',data)
+})
+
+eventEmitter.on('orderPlaced',(data)=>{
+    io.to('adminRoom').emit('orderPlaced',data)
+})
 
 
