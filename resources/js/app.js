@@ -2,6 +2,7 @@ import axios from 'axios'
 import Noty from 'noty'
 import{ initAdmin } from './admin'
 import moment from 'moment'
+import { initStripe } from './stripe'
 let addToCart = document.querySelectorAll('.add-to-cart');
 let cartCounter=document.querySelector('#cartCounter')
 
@@ -28,8 +29,6 @@ addToCart.forEach((btn) => {
       let pizza=JSON.parse(btn.dataset.pizza)
 
       updateCart(pizza)
-
-
     })
 })
 
@@ -71,9 +70,11 @@ statuses.forEach((status) =>{
 }
 updateStatus(order);
 
+initStripe()
+
 //socket
 let socket=io()
-initAdmin(socket)
+
 //join
 if(order){
     socket.emit('join',`order_${order._id}`)
@@ -81,6 +82,7 @@ if(order){
 
 let adminAreaPath =window.location.pathname
 if(adminAreaPath.includes('admin')){
+    initAdmin(socket)
     socket.emit('join','adminRoom')
 }
 socket.on('orderUpdated',(data)=>{
