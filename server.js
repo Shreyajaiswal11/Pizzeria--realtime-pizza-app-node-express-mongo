@@ -13,7 +13,7 @@ const passport =require('passport')
 const Emitter=require('events')
 
 // //database connection
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/pizza';
+const dbUrl = process.env.MONGO_CONNECTION_URL;
 mongoose.connect(dbUrl, {
     useNewUrlParser:true,
     /*useCreateIndex:true,*/
@@ -74,6 +74,10 @@ const server=app.listen(Port, () =>{
     console.log(`listinning to port ${Port}`)
 })
 require('./routes/web')(app)
+app.use((req,res) =>{
+    res.status(404).render('errors/404')
+
+})
 
 // Socket
 const io= require('socket.io')(server)
