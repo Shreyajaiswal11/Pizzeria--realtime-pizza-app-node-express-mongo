@@ -4,7 +4,7 @@ const app= express();
 const ejs=require("ejs");
 const Path=require("path");
 const expressLayout =require("express-ejs-layouts");
-const Port=process.env.PORT || 5000;
+const PORT=process.env.PORT || 5000
 const mongoose=require('mongoose')
 const flash=require('express-flash')
 const MongoDbStore=require('connect-mongo')
@@ -70,8 +70,8 @@ app.use(expressLayout)
 app.set('views',Path.join(__dirname,'/resources/views'))
 app.set('view engine','ejs')
 
-const server=app.listen(Port, () =>{
-    console.log(`listinning to port ${Port}`)
+const server=app.listen(PORT, () =>{
+    console.log(`listinning to port ${PORT}`)
 })
 require('./routes/web')(app)
 app.use((req,res) =>{
