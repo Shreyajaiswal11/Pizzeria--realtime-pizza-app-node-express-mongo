@@ -1,4 +1,5 @@
 require('dotenv').config()
+const { MongoClient } = require('mongodb');
 const express=require("express");
 const app= express();
 const ejs=require("ejs");
@@ -12,13 +13,14 @@ const session =require('express-session')
 const passport =require('passport')
 const Emitter=require('events')
 
-// //database connection
-const dbUrl = process.env.MONGO_CONNECTION_URL || "mongodb://localhost:27017/pizza";
+//database connection
+const dbUrl = "mongodb://localhost:27017/pizza"|| process.env.MONGO_CONNECTION_URL;
 mongoose.connect(dbUrl, {
     useNewUrlParser:true,
-    /*useCreateIndex:true,*/
+    // useCreateIndex:true,
     useUnifiedTopology:true
 });
+
 
 mongoose.connect(dbUrl);
 const db = mongoose.connection;
@@ -26,17 +28,17 @@ db.on("error", console.error.bind(console,"connection error:"));
 db.once("open",()=> {
     console.log("Database connected");
 });
+
+
+//event emitter
 const eventEmitter =new Emitter()
 app.set('eventEmitter',eventEmitter)
-//event emitter
-
 
 // session config
 app.use(session({
-    secret:process.env.COOKIE_SECRET,
+    secret:process.env.COOKIE_SECRET || thisisshreya,
     resave: false,
     store: MongoDbStore.create({
-        // mongoUrl:'mongodb://localhost:27017/pizza'
         client:db.getClient()
     }),
     saveUninitialized: false,
