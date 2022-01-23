@@ -13,7 +13,7 @@ const passport =require('passport')
 const Emitter=require('events')
 
 // //database connection
-const dbUrl = process.env.MONGO_CONNECTION_URL;
+const dbUrl = process.env.MONGO_CONNECTION_URL || "mongodb://localhost:27017/pizza";
 mongoose.connect(dbUrl, {
     useNewUrlParser:true,
     /*useCreateIndex:true,*/
