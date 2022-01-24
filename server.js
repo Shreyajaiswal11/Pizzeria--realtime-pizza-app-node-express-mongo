@@ -14,7 +14,7 @@ const passport =require('passport')
 const Emitter=require('events')
 
 //database connection 
-const dbUrl = "mongodb://localhost:27017/pizza" || process.env.MONGO_CONNECTION_URL  ;
+const dbUrl =process.env.MONGO_CONNECTION_URL || "mongodb://localhost:27017/pizza" ;
 mongoose.connect(dbUrl, {
     useNewUrlParser:true,
     // useCreateIndex:true,
@@ -28,12 +28,17 @@ db.once("open",()=> {
     console.log("Database connected");
 });  
 
+
 // session config
 app.use(session({
     secret:process.env.COOKIE_SECRET,
     resave: false,
     store: MongoDbStore.create({
-        client:db.getClient()
+        // client:db.getClient()
+        mongoUrl:dbUrl,
+        collectionName:"sessions",
+        autoRemove:'interval',
+        autoRemoveInterval:20,
     }),
     saveUninitialized: false,
     cookie: { maxAge: 1000 * 60 * 60 * 24 } // 24 hour
