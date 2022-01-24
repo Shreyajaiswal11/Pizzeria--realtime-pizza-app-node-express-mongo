@@ -13,30 +13,24 @@ const session =require('express-session')
 const passport =require('passport')
 const Emitter=require('events')
 
-//database connection
-const dbUrl = "mongodb://localhost:27017/pizza"|| process.env.MONGO_CONNECTION_URL;
+//database connection 
+const dbUrl = "mongodb://localhost:27017/pizza" || process.env.MONGO_CONNECTION_URL  ;
 mongoose.connect(dbUrl, {
     useNewUrlParser:true,
     // useCreateIndex:true,
     useUnifiedTopology:true
 });
 
-
 mongoose.connect(dbUrl);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console,"connection error:"));
 db.once("open",()=> {
     console.log("Database connected");
-});
-
-
-//event emitter
-const eventEmitter =new Emitter()
-app.set('eventEmitter',eventEmitter)
+});  
 
 // session config
 app.use(session({
-    secret:process.env.COOKIE_SECRET || thisisshreya,
+    secret:process.env.COOKIE_SECRET,
     resave: false,
     store: MongoDbStore.create({
         client:db.getClient()
@@ -45,6 +39,9 @@ app.use(session({
     cookie: { maxAge: 1000 * 60 * 60 * 24 } // 24 hour
     
 }))
+//event emitter
+const eventEmitter =new Emitter()
+app.set('eventEmitter',eventEmitter)
 
 
 //passport config
