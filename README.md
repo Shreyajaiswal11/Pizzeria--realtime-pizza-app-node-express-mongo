@@ -30,7 +30,7 @@ __USER LOGIN__
 <br/>
 Username: rachelgreen@gmail.com
 <br/>
-Password: we_are_on_a_break
+Password:12345678
 <br/>
 
 __ADMIN LOGIN__<br/>
