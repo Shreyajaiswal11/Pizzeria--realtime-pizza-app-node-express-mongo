@@ -28,7 +28,7 @@ Using This app you will able to order a pizza and get realtime notifications abo
 #  Sample login credentials:<br/>
 __USER LOGIN__
 <br/>
-Username: rachelgreen@gmail.com
+Username: rach@gmail.com
 <br/>
 Password:12345678
 <br/>
@@ -55,5 +55,9 @@ CVV: 100
 - [ ]  Finish UP<br/>
 - [ ] Update and delete from cart.<br/>
 - [ ] Integrating chatbot.
+
+<hr>
+
+#  Deployed using Heroku, database on MongoDB Atlas
 
 
