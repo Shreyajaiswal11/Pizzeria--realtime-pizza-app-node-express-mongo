@@ -8,7 +8,7 @@ Using This app you will able to order a pizza and get realtime notifications abo
 #  Prominent features of app are <br />
 -Fully responsive UI.<br />
 -Add to cart Feature.<br />
--JWT authentication.<br />
+-Authentication using passport.js<br />
 -Storing orders in database.<br />
 -Retrieving users orders<br />
 -Placing pizza Orders.<br />
